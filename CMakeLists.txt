@@ -31,7 +31,7 @@ include(ECMSourceVersionControl)
 include(FeatureSummary)
 
 find_package(Qt5 ${QT_MIN_VERSION} REQUIRED COMPONENTS Core Quick Qml Widgets Xml)
-find_package(KF5 ${KF5_MIN_VERSION} REQUIRED COMPONENTS I18n CoreAddons)
+find_package(KF5 ${KF5_MIN_VERSION} REQUIRED COMPONENTS I18n CoreAddons Kirigami2)
 
 find_package(Qt5QuickCompiler)
 set_package_properties(Qt5QuickCompiler PROPERTIES
