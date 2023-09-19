@@ -12,13 +12,6 @@ Async::~Async()
 
 void Async::run()
 {
-/*
-    QProcess askPermission;
-    askPermission.start("kdialog --password \"Please enter your password to continue\"");
-    askPermission.waitForReadyRead(-1);
-    QByteArray sudoPwd = askPermission.readAll().simplified();
-    askPermission.close();
-*/
     int error;
 
     if (m_operation == "get")
