@@ -1,6 +1,6 @@
 [Desktop Entry]
-Name=novastore
-Comment=Convergent app ...
+Name=Nova Store
+Comment=Zypper-based package manager
 TryExec=novastore
 Exec=novastore %U
 Terminal=false

@@ -3,10 +3,10 @@
   <id>org.kde.novastore.desktop</id>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>LGPL-3.0</project_license>
-  <name>novastore</name>
-  <summary>MauiKit app for ...</summary>
+  <name>Nova Store</name>
+  <summary>Zypper-based package manager</summary>
   <description>
-    <p>novastore is a ...</p>
+    <p>Zypper-based package manager</p>
   </description>
   <url type="homepage">https://novastore.kde.org/</url>
   <url type="bugtracker">https://bugs.kde.org/enter_bug.cgi?product=novastore</url>
