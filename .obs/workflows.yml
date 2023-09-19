@@ -1,0 +1,7 @@
+rebuild_master:
+    steps:
+        - rebuild_package:
+            project: home:hopeandtruth6517:test
+            package: novastore
+    filters:
+    event: push
