@@ -1,0 +1,13 @@
+[Desktop Entry]
+Name=novastore
+Comment=Convergent app ...
+TryExec=novastore
+Exec=novastore %U
+Terminal=false
+Type=Application
+GenericName=
+StartupNotify=true
+Icon=plasmadiscover
+Categories=Qt;KDE;
+MimeType=
+SingleMainWindow=true

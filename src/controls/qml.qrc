@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>HomePage.qml</file>
+        <file>SearchPage.qml</file>
+        <file>DetailsPage.qml</file>
+        <file>ModernAppsPage.qml</file>
+        <file>../assets/index.png</file>
+        <file>../assets/vvave.png</file>
+    </qresource>
+</RCC>
