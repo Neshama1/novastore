@@ -24,13 +24,13 @@ void Async::run()
     if (error == 0)
     {
         if (m_operation == "get")
-            notification.execute("kdialog --passivepopup \"The application has been installed\" 2");
+            notification.execute("kdialog --passivepopup \"The application has been installed\" 30");
         if (m_operation == "remove")
-            notification.execute("kdialog --passivepopup \"The application has been removed\" 2");
+            notification.execute("kdialog --passivepopup \"The application has been removed\" 30");
     }
     else
     {
-        notification.execute("kdialog --passivepopup \"An error occurred\" 2");
+        notification.execute("kdialog --passivepopup \"An error occurred\" 10");
     }
 }
 
