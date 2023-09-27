@@ -262,16 +262,14 @@ Maui.Page
             {
                 installedDialog.visible = true
 
+                //Update DetailsPage
+                AppBackend.detail(AppBackend.package[0].name)
+                getDetail()
+
+                // Update SearchPage
                 var fcount = AppBackend.count
                 for (var i = 0 ; i < fcount ; i++) {
                     if (AppBackend.packages[i].name == AppBackend.package[0].name) {
-                        //appModel.set(i, {"status": detailinstalled == "Yes" ? "not-installed" : "installed"})
-
-                        //Update DetailsPage
-                        AppBackend.detail(AppBackend.packages[i].name)
-                        getDetail()
-
-                        // Update SearchPage
                         appModel.clear()
                         AppBackend.updateState()
                         root.readAppModel()
