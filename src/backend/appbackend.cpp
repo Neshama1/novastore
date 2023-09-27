@@ -7,7 +7,7 @@
 
 AppBackend::AppBackend()
 {
-
+    m_query = "";
 }
 
 AppBackend::~AppBackend()
@@ -65,6 +65,8 @@ void AppBackend::search(QString package)
 
     if (package == "")
         return;
+
+    m_query = package;
 
     // Search..
 
@@ -242,7 +244,7 @@ void AppBackend::listModernApps()
 
     QProcess *process = new QProcess(this->parent());
     QStringList arguments;
-    arguments << "-x" << "search" << "-r" << "https://download.opensuse.org/repositories/home:/hopeandtruth6517:/mauikit-apps/openSUSE_Tumbleweed/" << "-r" << "https://download.opensuse.org/repositories/home:/hopeandtruth6517:/kirigami-apps/openSUSE_Tumbleweed/" << "-t" << "package" << "*";
+    arguments << "-x" << "search" << "-r" << "https://download.opensuse.org/repositories/home:/hopeandtruth6517:/mauikit-apps/openSUSE_Tumbleweed/" << "-r" << "https://download.opensuse.org/repositories/home:/hopeandtruth6517:/kirigami-apps/openSUSE_Tumbleweed/" << "-r" << "https://download.opensuse.org/repositories/home:/hopeandtruth6517:/nova-apps/home_hopeandtruth6517_mauikit-apps_tumbleweed" << "-t" << "package" << "*";
     process->start("zypper",arguments);
 
     QString output;
@@ -325,4 +327,9 @@ void AppBackend::refresh(QString pass)
     {
         notification.execute("kdialog --passivepopup \"An error occurred\" 2");
     }
+}
+
+void AppBackend::updateState()
+{
+    search(m_query);
 }

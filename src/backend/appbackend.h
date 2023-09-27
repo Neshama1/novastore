@@ -33,6 +33,7 @@ public:
     Q_INVOKABLE void detail(QString package);
     Q_INVOKABLE void listModernApps();
     Q_INVOKABLE void refresh(QString pass);
+    Q_INVOKABLE void updateState();
 
 public:
     /**
@@ -71,6 +72,7 @@ private:
     QVariantList m_packages;
     QVariantList m_package;
     int m_count;
+    QString m_query;
 };
 
 #endif // APPBACKEND_H

@@ -111,6 +111,7 @@ Maui.Page
             }
             onClicked: {
                 detailinstalled == "Yes" ? threadAsync.setOperation("remove") : threadAsync.setOperation("get")
+                installedDialog.visible = false
                 passwordDialog.visible = true
             }
             HoverHandler {
@@ -177,9 +178,105 @@ Maui.Page
             echoMode: TextInput.Password
             onAccepted: {
                 passwordDialog.visible = false
+                installingDialog.visible = true
                 threadAsync.setPackage(detailname)
                 threadAsync.setPassword(text)
                 threadAsync.start()
+            }
+        }
+    }
+
+    // INSTALLATION
+
+    Kirigami.ShadowedRectangle {
+        id: installingDialog
+
+        Kirigami.Theme.colorSet: Kirigami.Theme.View
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: parent.bottom
+        anchors.margins: 20
+        visible: false
+        opacity: 1
+        width: parent.width - 200
+        height: 70
+        color: Kirigami.Theme.backgroundColor
+        border.color: Kirigami.Theme.backgroundColor
+        border.width: 2
+        shadow.size: 20
+        shadow.color: "#5c5c5c"
+        shadow.xOffset: 0
+        shadow.yOffset: 0
+        radius: 6
+        z: 1
+
+        Label {
+            anchors.centerIn: parent
+            text: detailinstalled == "Yes" ? "Uninstalling" : "Installing"
+        }
+    }
+
+    Kirigami.ShadowedRectangle {
+        id: installedDialog
+
+        Kirigami.Theme.colorSet: Kirigami.Theme.View
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: parent.bottom
+        anchors.margins: 20
+        visible: false
+        opacity: 1
+        width: parent.width - 200
+        height: 70
+        color: Kirigami.Theme.backgroundColor
+        border.color: Kirigami.Theme.backgroundColor
+        border.width: 2
+        shadow.size: 20
+        shadow.color: "#5c5c5c"
+        shadow.xOffset: 0
+        shadow.yOffset: 0
+        radius: 6
+        z: 1
+
+        Label {
+            anchors.centerIn: parent
+            text: detailinstalled == "Yes" ? "Installation completed" : "Uninstallation completed"
+        }
+
+        Button {
+            anchors.right: parent.right
+            anchors.bottom: parent.bottom
+            anchors.margins: 10
+            width: 90
+            height: 30
+            text: "Ok"
+            onClicked: {
+                installedDialog.visible = false
+            }
+        }
+    }
+
+    Connections {
+        target: threadAsync
+        onInstallationCompleted: {
+            installingDialog.visible = false
+            if (error == 0)
+            {
+                installedDialog.visible = true
+
+                var fcount = AppBackend.count
+                for (var i = 0 ; i < fcount ; i++) {
+                    if (AppBackend.packages[i].name == AppBackend.package[0].name) {
+                        //appModel.set(i, {"status": detailinstalled == "Yes" ? "not-installed" : "installed"})
+
+                        //Update DetailsPage
+                        AppBackend.detail(AppBackend.packages[i].name)
+                        getDetail()
+
+                        // Update SearchPage
+                        appModel.clear()
+                        AppBackend.updateState()
+                        root.readAppModel()
+                    }
+                }
             }
         }
     }

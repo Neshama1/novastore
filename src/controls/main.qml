@@ -150,10 +150,8 @@ Maui.ApplicationWindow
             headBar.middleContent: [
                 Maui.SearchField
                 {
-                    //Layout.fillWidth: true
-                    //width: 500
+                    id: searchField
                     Layout.alignment: Qt.AlignHCenter
-                    //Layout.maximumWidth: 225
                     //placeholderText: i18n("Search...")
                     onAccepted: {
                         appModel.clear()

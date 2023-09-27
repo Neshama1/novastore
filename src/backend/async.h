@@ -27,6 +27,9 @@ public Q_SLOTS:
 Q_SIGNALS:
     void packageChanged(QString package);
 
+signals:
+    void installationCompleted(int error);
+
 private:
     QString name;
     QString m_package;
