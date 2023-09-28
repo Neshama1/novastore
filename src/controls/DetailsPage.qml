@@ -75,10 +75,12 @@ Maui.Page
             id: packageLabel
             anchors.top: parent.top
             anchors.left: parent.left
+            anchors.right: parent.right
             anchors.leftMargin: 10
-            //anchors.bottomMargin: 5
+            anchors.rightMargin: 10
             text: detailname
             font.pixelSize: 30
+            elide: Qt.ElideRight
         }
         Label {
             id: packageSummary

@@ -10,7 +10,9 @@ import org.kde.kirigami 2.12 as Kirigami
 Maui.ApplicationWindow
 {
     id: root
-    title: qsTr("Astro")
+    title: qsTr("Nova Store")
+
+    minimumHeight: 700
 
     Component.onCompleted: {
         _stackView.push("qrc:/HomePage.qml")

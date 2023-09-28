@@ -22,7 +22,9 @@ Maui.Page
         height: 300
         spacing: 6
         Rectangle {
-            color: merkuroMouse.hovered ? Qt.lighter('teal',1.1) : 'teal'
+            color: merkuroMouse.hovered ? Qt.lighter('aliceblue',1.03) : 'aliceblue'
+            border.color: Qt.darker(Maui.Theme.backgroundColor,1.1)
+            border.width: 1
             Layout.fillWidth: true
             Layout.minimumWidth: 50
             Layout.preferredWidth: 150
@@ -42,7 +44,7 @@ Maui.Page
                 y: -800
                 scale: 0.13
                 opacity: 0.70
-                source: "https://cdn.kde.org/screenshots/merkuro/contact.png"
+                source: "qrc:/assets/contact.png"
                 transform: Rotation { origin.x: 0; origin.y: 0; angle: 45}
                 z: 1
             }
@@ -59,7 +61,7 @@ Maui.Page
             }
         }
         Rectangle {
-            color: kastsMouse.hovered ? Qt.lighter('plum',1.1) : 'plum'
+            color: kastsMouse.hovered ? Qt.lighter('lavender',1.03) : 'lavender'
             Layout.fillWidth: true
             Layout.minimumWidth: 100
             Layout.preferredWidth: 150
@@ -78,7 +80,7 @@ Maui.Page
                 y: 70
                 scale: 0.20
                 opacity: 0.85
-                source: "https://cdn.kde.org/screenshots/kasts/kasts-desktop.png"
+                source: "qrc:/assets/kasts.png"
                 transform: Rotation { origin.x: 0; origin.y: 0; angle: -45}
                 z: 1
             }
@@ -97,6 +99,8 @@ Maui.Page
     }
 
     RowLayout {
+        id: kirigamiSection
+
         y: 190
         anchors.left: parent.left
         anchors.right: parent.right
@@ -207,18 +211,75 @@ Maui.Page
         }
     }
 
+    Rectangle {
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.top: kirigamiSection.bottom
+        anchors.bottom: moreLabel.top
+        anchors.leftMargin: 20
+        anchors.rightMargin: 20
+        anchors.topMargin: 15
+        anchors.bottomMargin: 6
+        color: Maui.Theme.backgroundColor
+        border.color: Qt.darker(Maui.Theme.backgroundColor,1.1)
+        border.width: 1
+        radius: 4
+        Maui.IconItem
+        {
+            opacity: mauiMouse.hovered ? 0.07 : 0.1
+            anchors.fill: parent
+            imageSource: "qrc:/assets/devApps.png"
+            imageSizeHint: 1500
+            maskRadius: Maui.Style.radiusV
+            fillMode: Image.PreserveAspectCrop
+        }
+        Label {
+            anchors.left: parent.left
+            anchors.top: parent.top
+            anchors.margins: 15
+            text: "MauiKit Development"
+            font.pixelSize: 16
+        }
+        Label {
+            anchors.left: parent.left
+            anchors.bottom: parent.bottom
+            anchors.margins: 15
+            text: "Framework"
+            opacity: 0.60
+            font.pixelSize: 11
+        }
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                AppBackend.detail("patterns-kde-mauikit-stable_devel_mauikit_frameworks")
+                _stackView.push("qrc:/DetailsPage.qml")
+                menuView.currentIndex = -1;
+            }
+        }
+        HoverHandler {
+            id: mauiMouse
+        }
+    }
+
     Label {
-        x: 20
-        y: 270
+        //x: 20
+        //y: 270
+        id: moreLabel
+        anchors.left: parent.left
+        anchors.bottom: mauiSection.top
+        anchors.leftMargin: 20
+        anchors.bottomMargin: 6
         text: "More"
         font.pixelSize: 30
     }
 
     ColumnLayout{
-        y: 320
+        id: mauiSection
+        //y: 320
         spacing: 6
         anchors.left: parent.left
         anchors.right: parent.right
+        anchors.bottom: parent.bottom
         anchors.margins: 20
 
         Rectangle {
@@ -266,7 +327,10 @@ Maui.Page
         }
 
         Rectangle {
-            color: vvaveMouse.hovered ? Qt.lighter('lightgreen',1.1) : 'lightgreen'
+            //color: vvaveMouse.hovered ? Qt.lighter('lightgreen',1.1) : 'lightgreen'
+            color: vvaveMouse.hovered ? Qt.lighter('aliceblue',1.1) : 'aliceblue'
+            //border.color: Qt.darker(Maui.Theme.backgroundColor,1.2)
+            //border.width: 1
             Layout.alignment: Qt.AlignRight
             Layout.preferredWidth: parent.width
             Layout.preferredHeight: 70
