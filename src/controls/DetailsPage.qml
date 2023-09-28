@@ -103,14 +103,14 @@ Maui.Page
             anchors.margins: 10
             width: 100
             height: 40
-            text: detailinstalled == "Yes" ? "Remove" : "Get"
+            text: detailinstalled == "No" ? "Get" : "Remove"
             background: Rectangle {
                 anchors.fill: parent
                 radius: 4
-                color: detailinstalled == "Yes" ? (buttonMouse.hovered ? Qt.lighter('deeppink',1.3) : 'deeppink') : (buttonMouse.hovered ? Qt.lighter('mediumspringgreen',1.3) : 'mediumspringgreen')
+                color: detailinstalled == "No" ? (buttonMouse.hovered ? Qt.lighter('mediumspringgreen',1.3) : 'mediumspringgreen') : (buttonMouse.hovered ? Qt.lighter('deeppink',1.3) : 'deeppink')
             }
             onClicked: {
-                detailinstalled == "Yes" ? threadAsync.setOperation("remove") : threadAsync.setOperation("get")
+                detailinstalled == "No" ? threadAsync.setOperation("get") : threadAsync.setOperation("remove")
                 installedDialog.visible = false
                 passwordDialog.visible = true
             }
@@ -211,7 +211,7 @@ Maui.Page
 
         Label {
             anchors.centerIn: parent
-            text: detailinstalled == "Yes" ? "Uninstalling" : "Installing"
+            text: detailinstalled == "No" ? "Installing" : "Uninstalling"
         }
     }
 
@@ -238,7 +238,7 @@ Maui.Page
 
         Label {
             anchors.centerIn: parent
-            text: detailinstalled == "Yes" ? "Installation completed" : "Uninstallation completed"
+            text: detailinstalled == "No" ? "Uninstallation completed" : "Installation completed"
         }
 
         Button {
