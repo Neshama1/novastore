@@ -48,7 +48,7 @@ Maui.Page {
             implicitWidth: parent.width
             implicitHeight: 55
 
-            iconSource: status == "installed" ? "installed" : "noninstalled"
+            iconSource: status == "not-installed" ? "noninstalled" : "installed"
             label1.text: name
             label2.text: summary
 

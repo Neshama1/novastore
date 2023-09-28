@@ -48,7 +48,7 @@ Maui.Page
             implicitWidth: parent.width	// anchura de un elemento de la lista
             implicitHeight: 55		// altura de un elemento de la lista
 
-            iconSource: status == "installed" ? "installed" : "noninstalled"
+            iconSource: status == "not-installed" ? "noninstalled" : "installed"
             label1.text: name
             label2.text: summary
 
