@@ -267,14 +267,9 @@ Maui.Page
                 getDetail()
 
                 // Update SearchPage
-                var fcount = AppBackend.count
-                for (var i = 0 ; i < fcount ; i++) {
-                    if (AppBackend.packages[i].name == AppBackend.package[0].name) {
-                        appModel.clear()
-                        AppBackend.updateState()
-                        root.readAppModel()
-                    }
-                }
+                appModel.clear()
+                AppBackend.updateState()
+                root.readAppModel()
             }
         }
     }
