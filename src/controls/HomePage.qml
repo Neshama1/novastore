@@ -51,9 +51,12 @@ Maui.Page
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    AppBackend.detail("merkuro")
-                    _stackView.push("qrc:/DetailsPage.qml")
-                    menuView.currentIndex = -1;
+                    if (passwordDialog.visible == false)
+                    {
+                        AppBackend.detail("merkuro")
+                        _stackView.push("qrc:/DetailsPage.qml")
+                        menuView.currentIndex = -1;
+                    }
                 }
             }
             HoverHandler {
@@ -87,9 +90,12 @@ Maui.Page
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    AppBackend.detail("kasts")
-                    _stackView.push("qrc:/DetailsPage.qml")
-                    menuView.currentIndex = -1;
+                    if (passwordDialog.visible == false)
+                    {
+                        AppBackend.detail("kasts")
+                        _stackView.push("qrc:/DetailsPage.qml")
+                        menuView.currentIndex = -1;
+                    }
                 }
             }
             HoverHandler {
@@ -131,9 +137,12 @@ Maui.Page
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    AppBackend.detail("elisa")
-                    _stackView.push("qrc:/DetailsPage.qml")
-                    menuView.currentIndex = -1;
+                    if (passwordDialog.visible == false)
+                    {
+                        AppBackend.detail("elisa")
+                        _stackView.push("qrc:/DetailsPage.qml")
+                        menuView.currentIndex = -1;
+                    }
                 }
             }
             HoverHandler {
@@ -166,9 +175,12 @@ Maui.Page
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    AppBackend.detail("alligator")
-                    _stackView.push("qrc:/DetailsPage.qml")
-                    menuView.currentIndex = -1;
+                    if (passwordDialog.visible == false)
+                    {
+                        AppBackend.detail("alligator")
+                        _stackView.push("qrc:/DetailsPage.qml")
+                        menuView.currentIndex = -1;
+                    }
                 }
             }
             HoverHandler {
@@ -200,9 +212,12 @@ Maui.Page
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    AppBackend.detail("angelfish")
-                    _stackView.push("qrc:/DetailsPage.qml")
-                    menuView.currentIndex = -1;
+                    if (passwordDialog.visible == false)
+                    {
+                        AppBackend.detail("angelfish")
+                        _stackView.push("qrc:/DetailsPage.qml")
+                        menuView.currentIndex = -1;
+                    }
                 }
             }
             HoverHandler {
@@ -251,9 +266,12 @@ Maui.Page
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                AppBackend.detail("patterns-kde-mauikit-stable_devel_mauikit_frameworks")
-                _stackView.push("qrc:/DetailsPage.qml")
-                menuView.currentIndex = -1;
+                if (passwordDialog.visible == false)
+                {
+                    AppBackend.detail("patterns-kde-mauikit-stable_devel_mauikit_frameworks")
+                    _stackView.push("qrc:/DetailsPage.qml")
+                    menuView.currentIndex = -1;
+                }
             }
         }
         HoverHandler {
@@ -262,8 +280,6 @@ Maui.Page
     }
 
     Label {
-        //x: 20
-        //y: 270
         id: moreLabel
         anchors.left: parent.left
         anchors.bottom: mauiSection.top
@@ -316,9 +332,12 @@ Maui.Page
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    AppBackend.detail("maui-index")
-                    _stackView.push("qrc:/DetailsPage.qml")
-                    menuView.currentIndex = -1;
+                    if (passwordDialog.visible == false)
+                    {
+                        AppBackend.detail("maui-index")
+                        _stackView.push("qrc:/DetailsPage.qml")
+                        menuView.currentIndex = -1;
+                    }
                 }
             }
             HoverHandler {
@@ -363,9 +382,12 @@ Maui.Page
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    AppBackend.detail("maui-vvave")
-                    _stackView.push("qrc:/DetailsPage.qml")
-                    menuView.currentIndex = -1;
+                    if (passwordDialog.visible == false)
+                    {
+                        AppBackend.detail("maui-vvave")
+                        _stackView.push("qrc:/DetailsPage.qml")
+                        menuView.currentIndex = -1;
+                    }
                 }
             }
             HoverHandler {
@@ -398,9 +420,12 @@ Maui.Page
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    AppBackend.detail("maui-pix")
-                    _stackView.push("qrc:/DetailsPage.qml")
-                    menuView.currentIndex = -1;
+                    if (passwordDialog.visible == false)
+                    {
+                        AppBackend.detail("maui-pix")
+                        _stackView.push("qrc:/DetailsPage.qml")
+                        menuView.currentIndex = -1;
+                    }
                 }
             }
             HoverHandler {

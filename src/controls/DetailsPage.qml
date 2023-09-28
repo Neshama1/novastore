@@ -153,8 +153,8 @@ Maui.Page
         anchors.centerIn: parent
         visible: false
         opacity: 1
-        width: parent.width - 100
-        height: parent.height - 100
+        width: 300
+        height: 100
         color: Kirigami.Theme.backgroundColor
         border.color: Kirigami.Theme.backgroundColor
         border.width: 2
@@ -165,17 +165,9 @@ Maui.Page
         radius: 6
         z: 1
 
-        Label {
-            anchors.left: parent.left
-            anchors.top: parent.top
-            anchors.margins: 10
-            text: "Password"
-            font.pointSize: 20
-        }
-
         TextField {
             anchors.centerIn: parent
-            width: 200
+            width: 250
             placeholderText: i18n("Enter your password")
             echoMode: TextInput.Password
             onAccepted: {
