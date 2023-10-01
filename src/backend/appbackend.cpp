@@ -152,7 +152,7 @@ void AppBackend::detail(QString package)
 
     QProcess *process = new QProcess(this->parent());
     QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-    env.insert("LANG", "en_US");
+    env.insert("LANG", "en");
     process->setProcessEnvironment(env);
     QStringList arguments;
     arguments << "info" << package;
