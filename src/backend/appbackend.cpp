@@ -74,7 +74,7 @@ void AppBackend::search(QString package)
 
     QProcess *process = new QProcess(this->parent());
     QStringList arguments;
-    arguments << "-x" << "search" << "-t" << "package" << package;
+    arguments << "-x" << "search" << "--search-descriptions" << "-t" << "package" << package;
     process->start("zypper",arguments);
 
     QString output;
@@ -315,7 +315,7 @@ void AppBackend::listModernApps()
 void AppBackend::refresh(QString pass)
 {
     QByteArray sudoPwd(pass.toUtf8());
-    int error = system("echo " + sudoPwd + " | sudo -S zypper -n refresh");
+    int error = system("echo " + sudoPwd + " | sudo -S zypper -n --gpg-auto-import-keys refresh");
 
     QProcess notification;
 

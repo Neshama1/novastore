@@ -71,7 +71,7 @@ Maui.Page
         radius: 5
         color: Maui.Theme.backgroundColor
         Maui.Theme.inherit: false
-        Label {
+        Text {
             id: packageLabel
             anchors.top: parent.top
             anchors.left: parent.left
@@ -112,9 +112,12 @@ Maui.Page
                 color: detailinstalled == "No" ? (buttonMouse.hovered ? Qt.lighter('mediumspringgreen',1.3) : 'mediumspringgreen') : (buttonMouse.hovered ? Qt.lighter('deeppink',1.3) : 'deeppink')
             }
             onClicked: {
-                detailinstalled == "No" ? threadAsync.setOperation("get") : threadAsync.setOperation("remove")
-                installedDialog.visible = false
-                passwordDialog.visible = true
+                if (addRemovePackage == false)
+                {
+                    detailinstalled == "No" ? threadAsync.setOperation("get") : threadAsync.setOperation("remove")
+                    installedDialog.visible = false
+                    passwordDialog.visible = true
+                }
             }
             HoverHandler {
                 id: buttonMouse
@@ -173,6 +176,7 @@ Maui.Page
             onAccepted: {
                 passwordDialog.visible = false
                 installingDialog.visible = true
+                addRemovePackage = true
                 threadAsync.setPackage(detailname)
                 threadAsync.setPassword(text)
                 threadAsync.start()
@@ -252,6 +256,7 @@ Maui.Page
         target: threadAsync
         onInstallationCompleted: {
             installingDialog.visible = false
+            addRemovePackage = false
             if (error == 0)
             {
                 installedDialog.visible = true

@@ -1,4 +1,5 @@
 [Project]
-Name=novastore
+CreatedFrom=CMakeLists.txt
 Manager=KDevCMakeManager
+Name=novastore
 VersionControl=

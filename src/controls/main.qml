@@ -2,6 +2,7 @@ import QtQuick 2.15
 import QtQml 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.12
+import QtQuick.Window 2.2
 import org.mauikit.controls 1.3 as Maui
 import org.mauikit.filebrowsing 1.3 as FB
 import org.kde.novastore 1.0
@@ -12,6 +13,10 @@ Maui.ApplicationWindow
     id: root
     title: qsTr("Nova Store")
 
+    property bool addRemovePackage: false
+
+    width: Screen.height < 800 ? Screen.desktopAvailableWidth - Screen.desktopAvailableWidth * 40 / 100 : Screen.desktopAvailableWidth - Screen.desktopAvailableWidth * 45 / 100
+    height: Screen.desktopAvailableHeight - Screen.desktopAvailableHeight * 20 / 100
     minimumHeight: 700
 
     Component.onCompleted: {
@@ -81,11 +86,11 @@ Maui.ApplicationWindow
                 {
                     icon.name: "application-menu"
 
-                    MenuItem
-                    {
-                        text: i18n("Settings")
-                        icon.name: "settings-configure"
-                    }
+                    //MenuItem
+                    //{
+                    //    text: i18n("Settings")
+                    //    icon.name: "settings-configure"
+                    //}
 
                     MenuItem
                     {
@@ -116,17 +121,23 @@ Maui.ApplicationWindow
                         onClicked: {
                             switch (index) {
                                 case 0: {
-                                    menuView.currentIndex = index
-                                    _stackView.push("qrc:/HomePage.qml")
+                                    if (addRemovePackage == false)
+                                    {
+                                        menuView.currentIndex = index
+                                        _stackView.push("qrc:/HomePage.qml")
+                                    }
                                     return
                                 }
                                 case 1: {
-                                    menuView.currentIndex = index
-                                    AppBackend.listModernApps()
-                                    appModel.clear()
-                                    readAppModel()
-                                    _stackView.clear()
-                                    _stackView.push("qrc:/ModernAppsPage.qml")
+                                    if (addRemovePackage == false)
+                                    {
+                                        menuView.currentIndex = index
+                                        AppBackend.listModernApps()
+                                        appModel.clear()
+                                        readAppModel()
+                                        _stackView.clear()
+                                        _stackView.push("qrc:/ModernAppsPage.qml")
+                                    }
                                     return
                                 }
                             }
@@ -146,7 +157,12 @@ Maui.ApplicationWindow
                 ToolButton
                 {
                     icon.name: "arrow-left"
-                    onClicked: _stackView.pop()
+                    onClicked: {
+                        if (addRemovePackage == false)
+                        {
+                            _stackView.pop()
+                        }
+                    }
                 }
             ]
             headBar.middleContent: [
@@ -156,11 +172,14 @@ Maui.ApplicationWindow
                     Layout.alignment: Qt.AlignHCenter
                     //placeholderText: i18n("Search...")
                     onAccepted: {
-                        appModel.clear()
-                        AppBackend.search(text)
-                        readAppModel()
-                        _stackView.push("qrc:/SearchPage.qml")
-                        menuView.currentIndex = -1;
+                        if (addRemovePackage == false)
+                        {
+                            appModel.clear()
+                            AppBackend.search(text)
+                            readAppModel()
+                            _stackView.push("qrc:/SearchPage.qml")
+                            menuView.currentIndex = -1;
+                        }
                     }
                     //onCleared:
                 }

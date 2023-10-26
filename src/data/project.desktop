@@ -8,6 +8,6 @@ Type=Application
 GenericName=
 StartupNotify=true
 Icon=plasmadiscover
-Categories=Qt;KDE;
+Categories=System
 MimeType=
 SingleMainWindow=true
