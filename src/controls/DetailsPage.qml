@@ -71,7 +71,7 @@ Maui.Page
         radius: 5
         color: Maui.Theme.backgroundColor
         Maui.Theme.inherit: false
-        Text {
+        Label {
             id: packageLabel
             anchors.top: parent.top
             anchors.left: parent.left
