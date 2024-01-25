@@ -34,15 +34,18 @@ Maui.Page {
         duration: 400
     }
 
-    ListView {
+    Maui.ListBrowser {
         id: appListView
-
         anchors.fill: parent
         anchors.margins: 20
+
+        horizontalScrollBarPolicy: ScrollBar.AsNeeded
+        verticalScrollBarPolicy: ScrollBar.AsNeeded
 
         spacing: 5
 
         model: appModel
+
         delegate: Maui.ListBrowserDelegate
         {
             implicitWidth: parent.width

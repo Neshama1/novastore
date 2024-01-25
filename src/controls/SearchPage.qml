@@ -34,17 +34,19 @@ Maui.Page
         duration: 400
     }
 
-    ListView {
+    Maui.ListBrowser {
         id: appView
-
         anchors.fill: parent
         anchors.margins: 20
+
+        horizontalScrollBarPolicy: ScrollBar.AsNeeded
+        verticalScrollBarPolicy: ScrollBar.AsNeeded
 
         spacing: 5
 
         model: appModel
-        delegate: Maui.ListBrowserDelegate
-        {
+
+        delegate: Maui.ListBrowserDelegate {
             implicitWidth: parent.width	// anchura de un elemento de la lista
             implicitHeight: 55		// altura de un elemento de la lista
 
@@ -60,6 +62,7 @@ Maui.Page
                     appView.currentIndex = index
                     AppBackend.detail(AppBackend.packages[index].name)
                     _stackView.push("qrc:/DetailsPage.qml")
+                    console.info("pulsado")
                 }
             }
         }
