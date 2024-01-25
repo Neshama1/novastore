@@ -5,8 +5,8 @@ import QtQuick.Layouts 1.12
 import org.mauikit.controls 1.3 as Maui
 import org.kde.novastore 1.0
 
-Maui.Page {
-
+Maui.Page
+{
     id: modernAppsPage
 
     headBar.visible: false
