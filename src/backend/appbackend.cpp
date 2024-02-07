@@ -244,7 +244,7 @@ void AppBackend::listModernApps()
 
     QProcess *process = new QProcess(this->parent());
     QStringList arguments;
-    arguments << "-x" << "search" << "-r" << "https://download.opensuse.org/repositories/home:/hopeandtruth6517:/mauikit-apps/openSUSE_Tumbleweed/" << "-r" << "https://download.opensuse.org/repositories/home:/hopeandtruth6517:/kirigami-apps/openSUSE_Tumbleweed/" << "-r" << "https://download.opensuse.org/repositories/home:/hopeandtruth6517:/nova-apps/home_hopeandtruth6517_mauikit-apps_tumbleweed" << "-t" << "package" << "*";
+    arguments << "-x" << "search" << "-r" << "https://download.opensuse.org/repositories/home:/hopeandtruth6517:/mauikit-apps/openSUSE_Tumbleweed_standard" << "-r" << "https://download.opensuse.org/repositories/home:/hopeandtruth6517:/nova-apps/mauikit-apps_openSUSE_Tumbleweed_standard" << "-r" << "https://download.opensuse.org/repositories/home:/hopeandtruth6517:/kirigami-apps/openSUSE_Tumbleweed_standard" << "-t" << "package" << "*";
     process->start("zypper",arguments);
 
     QString output;
