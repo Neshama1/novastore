@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(novastore VERSION 1.0)
+project(novastore VERSION 0.1.14)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
