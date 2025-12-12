@@ -24,6 +24,10 @@ QString SystemInfo::getWallpaper() {
         if (containment.groupList().contains("Wallpaper")) {
             KConfigGroup wallpaper = containment.group("Wallpaper").group("org.kde.image").group("General");
             wallpaperPath = wallpaper.readEntry("Image");
+
+            if (wallpaperPath.contains("file://")) {
+                wallpaperPath.remove("file://");
+            }
         }
     }
 

@@ -42,6 +42,8 @@ Maui.Page
         storeasset.opacity = height < 800 ? 0.1 : 1.0
 
         wallpaper.source = SystemInfo.getWallpaper()
+
+        console.info("Wallpaper", SystemInfo.getWallpaper())
     }
 
     Maui.ImageColors {
