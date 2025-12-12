@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>controls/Home.qml</file>
+        <file>controls/Search.qml</file>
+        <file>controls/Details.qml</file>
+        <file>controls/Applications.qml</file>
+        <file>controls/Packages.qml</file>
+        <file>controls/Requires.qml</file>
+        <file>controls/Provides.qml</file>
+		<file>controls/Password.qml</file>
+        <file>controls/Management.qml</file>
+    </qresource>
+</RCC>

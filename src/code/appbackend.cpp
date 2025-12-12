@@ -2,7 +2,7 @@
 // SPDX-FileCopyrightText: 2023 asterion <email>
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-#include "backend/appbackend.h"
+#include "appbackend.h"
 #include <QtCore>
 
 AppBackend::AppBackend()
@@ -26,7 +26,7 @@ void AppBackend::setPackages(QVariantList packages)
     }
 
     m_packages = packages;
-    emit packagesChanged(m_packages);
+    Q_EMIT packagesChanged(m_packages);
 }
 
 QVariantList AppBackend::package() const
@@ -41,7 +41,7 @@ void AppBackend::setPackage(QVariantList package)
     }
 
     m_package = package;
-    emit packageChanged(m_package);
+    Q_EMIT packageChanged(m_package);
 }
 
 int AppBackend::count() const
@@ -56,7 +56,7 @@ void AppBackend::setCount(int count)
     }
 
     m_count = count;
-    emit countChanged(m_count);
+    Q_EMIT countChanged(m_count);
 }
 
 void AppBackend::search(QString package)
@@ -85,7 +85,6 @@ void AppBackend::search(QString package)
     }
     process->waitForFinished();
 
-
     QFile file("/tmp/search.xml");
     QTextCodec *codec = QTextCodec::codecForLocale();
 
@@ -99,6 +98,7 @@ void AppBackend::search(QString package)
     qDebug() << "salida estandar" << output;
 
     // Load XML document
+
     QDomDocument appsXML;
 
     QFile xmlFile("/tmp/search.xml");
@@ -109,46 +109,18 @@ void AppBackend::search(QString package)
     appsXML.setContent(&xmlFile);
     xmlFile.close();
 
-    QDomElement root = appsXML.documentElement();
-    QDomElement node = root.firstChild().toElement();
-
-    int count = 0;
-
-    while(node.isNull() == false)
-    {
-        node = node.nextSibling().toElement();
-        if(node.tagName() == "search-result"){
-            QDomNode solvableListNode = node.firstChild();
-                while (!solvableListNode.isNull()) {
-                    QDomElement solvableListElement = node.firstChild().toElement();
-                    QDomNode solvableNode = solvableListElement.firstChild();
-                    while (!solvableNode.isNull()) {
-                        QDomElement solvableElement = solvableNode.toElement();
-
-                        QVariantMap item;
-                        item["status"] = solvableElement.attribute("status","status");
-                        item["name"] = solvableElement.attribute("name","name");
-                        item["summary"] = solvableElement.attribute("summary","summary");
-                        item["kind"] = solvableElement.attribute("kind","kind");
-                        m_packages.append(item);
-                        count++;
-
-                        solvableNode = solvableNode.nextSibling();
-                    }
-                    solvableListNode = solvableListNode.nextSibling();
-                }
-        }
-    }
-    m_count = count;
+    //m_count = count;
 }
 
 void AppBackend::detail(QString package)
 {
     m_package.clear();
 
-    // Detail
+    // PACKAGE
 
     qDebug() << package;
+
+    // GET INFO
 
     QProcess *process = new QProcess(this->parent());
     QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
@@ -166,73 +138,52 @@ void AppBackend::detail(QString package)
     }
     process->waitForFinished();
 
+    // GET DATA IN OBJECT
 
-    QFile file("/tmp/detail.txt");
-    QTextCodec *codec = QTextCodec::codecForLocale();
-
-    if (!file.open(QFile::ReadWrite|QFile::Truncate)) {
-        qDebug() << "Error opening for write: " << file.errorString();
-        return;
-    }
-    file.write(codec->fromUnicode(output));
-    file.close();
-
-    // Load detail.txt
-
-    QFile inputFile(QString("/tmp/detail.txt"));
-    inputFile.open(QIODevice::ReadOnly);
-    if (!inputFile.isOpen())
-        return;
-
-    QTextStream stream(&inputFile);
-    QString line = stream.readLine();
+    QTextStream stream(&output);
 
     QVariantMap item;
-    bool start = false;
-    int indexInfo = 0;
     QString description;
+    bool start = false;
 
-    while (!line.isNull())
-    {
-        /* process information */
+    QString line = stream.readLine();
+
+    while (!stream.atEnd()) {
+
         line = stream.readLine();
 
-        if (start == true)
-        {
-            if (indexInfo == 0)
-                item["repository"] = line.remove("Repository     : ");
-            if (indexInfo == 1)
-                item["name"] = line.remove("Name           : ");
-            if (indexInfo == 2)
-                item["version"] = line.remove("Version        : ");
-            if (indexInfo == 3)
-                item["arch"] = line.remove("Arch           : ");
-            if (indexInfo == 4)
-                item["vendor"] = line.remove("Vendor         : ");
-            if (indexInfo == 5)
-                item["installedsize"] = line.remove("Installed Size : ");
-            if (indexInfo == 6)
-                item["installed"] = line.remove("Installed      : ");
-            if (indexInfo == 7)
-                item["status"] = line.remove("Status         : ");
-            if (indexInfo == 8)
-                item["source"] = line.remove("Source package : ");
-            if (indexInfo == 9)
-                item["url"] = line.remove("Upstream URL   : ");
-            if (indexInfo == 10)
-                item["summary"] = line.remove("Summary        : ");
-            if (indexInfo > 11)
-                description.append(line);
+        if (start) {
 
-            indexInfo++;
+            // GET KEYS AND VALUES
+
+            QString key = line.section(':', 0, 0).trimmed().toLower();
+            QString value = line.section(':', 1).trimmed();
+
+            if (key != "description") {
+                item[key] = value;
+            }
+            else {
+
+                // GET KEY AND VALUE FOR DESCRIPTION
+
+                QString description;
+
+                while (!stream.atEnd()) {
+                    line = stream.readLine().trimmed();
+                    if (line != "") {
+                        description += line + " ";
+                    }
+                }
+
+                value = description.trimmed();
+                item[key] = value;
+            }
         }
 
         if (line.contains("----------"))
             start = true;
     }
 
-    QString cleanDescription = description.remove(0,4);
-    item ["description"] = cleanDescription;
     m_package.append(item);
 }
 
@@ -315,7 +266,10 @@ void AppBackend::listModernApps()
 void AppBackend::refresh(QString pass)
 {
     QByteArray sudoPwd(pass.toUtf8());
-    int error = system("echo " + sudoPwd + " | sudo -S zypper -n --gpg-auto-import-keys refresh");
+    QString command;
+
+    command = "echo " + sudoPwd + " | sudo -S zypper -n --gpg-auto-import-keys refresh";
+    int error = system(command.toUtf8());
 
     QProcess notification;
 
@@ -332,4 +286,164 @@ void AppBackend::refresh(QString pass)
 void AppBackend::updateState()
 {
     search(m_query);
+}
+
+void AppBackend::getApps()
+{
+    QProcess *process = new QProcess(this->parent());
+    QStringList arguments;
+    arguments << "-x" << "search" << "--provides" << "application()";
+    process->start("zypper",arguments);
+
+    QString output;
+    if (process->waitForStarted(-1)) {
+        while(process->waitForReadyRead(-1)) {
+            output += process->readAll();
+        }
+    }
+    process->waitForFinished();
+
+    QFile file("/tmp/apps.xml");
+    QTextCodec *codec = QTextCodec::codecForLocale();
+
+    if (!file.open(QFile::ReadWrite|QFile::Truncate)) {
+        qDebug() << "Error opening for write: " << file.errorString();
+        return;
+    }
+    file.write(codec->fromUnicode(output));
+    file.close();
+
+    qDebug() << "salida estandar" << output;
+
+    // Load XML document
+
+    QDomDocument appsXML;
+
+    QFile xmlFile("/tmp/apps.xml");
+    if (!xmlFile.open(QIODevice::ReadOnly))
+    {
+        // Error while loading file
+    }
+    appsXML.setContent(&xmlFile);
+    xmlFile.close();
+}
+
+void AppBackend::getPackages()
+{
+    QProcess *process = new QProcess(this->parent());
+    QStringList arguments;
+    arguments << "-x" << "search";
+    process->start("zypper",arguments);
+
+    QString output;
+    if (process->waitForStarted(-1)) {
+        while(process->waitForReadyRead(-1)) {
+            output += process->readAll();
+        }
+    }
+    process->waitForFinished();
+
+    QFile file("/tmp/packages.xml");
+    QTextCodec *codec = QTextCodec::codecForLocale();
+
+    if (!file.open(QFile::ReadWrite|QFile::Truncate)) {
+        qDebug() << "Error opening for write: " << file.errorString();
+        return;
+    }
+    file.write(codec->fromUnicode(output));
+    file.close();
+
+    qDebug() << "salida estandar" << output;
+
+    // Load XML document
+
+    QDomDocument appsXML;
+
+    QFile xmlFile("/tmp/packages.xml");
+    if (!xmlFile.open(QIODevice::ReadOnly))
+    {
+        // Error while loading file
+    }
+    appsXML.setContent(&xmlFile);
+    xmlFile.close();
+}
+
+void AppBackend::getRequires(const QString &package)
+{
+    QProcess *process = new QProcess(this->parent());
+    QStringList arguments;
+    arguments << "-x" << "search" << "--requires" << package;
+    process->start("zypper",arguments);
+
+    QString output;
+    if (process->waitForStarted(-1)) {
+        while(process->waitForReadyRead(-1)) {
+            output += process->readAll();
+        }
+    }
+    process->waitForFinished();
+
+    QFile file("/tmp/requires.xml");
+    QTextCodec *codec = QTextCodec::codecForLocale();
+
+    if (!file.open(QFile::ReadWrite|QFile::Truncate)) {
+        qDebug() << "Error opening for write: " << file.errorString();
+        return;
+    }
+    file.write(codec->fromUnicode(output));
+    file.close();
+
+    qDebug() << "salida estandar" << output;
+
+    // Load XML document
+
+    QDomDocument appsXML;
+
+    QFile xmlFile("/tmp/requires.xml");
+    if (!xmlFile.open(QIODevice::ReadOnly))
+    {
+        // Error while loading file
+    }
+    appsXML.setContent(&xmlFile);
+    xmlFile.close();
+}
+
+void AppBackend::getProvides(const QString &package)
+{
+    QProcess *process = new QProcess(this->parent());
+    QStringList arguments;
+    arguments << "-x" << "search" << "--provides" << package;
+    process->start("zypper",arguments);
+
+    QString output;
+    if (process->waitForStarted(-1)) {
+        while(process->waitForReadyRead(-1)) {
+            output += process->readAll();
+        }
+    }
+    process->waitForFinished();
+
+    QFile file("/tmp/provides.xml");
+    QTextCodec *codec = QTextCodec::codecForLocale();
+
+    if (!file.open(QFile::ReadWrite|QFile::Truncate)) {
+        qDebug() << "Error opening for write: " << file.errorString();
+        return;
+    }
+    file.write(codec->fromUnicode(output));
+    file.close();
+
+    qDebug() << "salida estandar" << output;
+
+    // Load XML document
+
+    QDomDocument appsXML;
+
+    QFile xmlFile("/tmp/provides.xml");
+    if (!xmlFile.open(QIODevice::ReadOnly))
+    {
+        // Error while loading file
+    }
+    appsXML.setContent(&xmlFile);
+    xmlFile.close();
 }

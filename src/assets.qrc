@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/">
+        <file>assets/logo.svg</file>
+        <file>assets/logo.png</file>
+        <file>assets/index.png</file>
+        <file>assets/vvave.png</file>
+        <file>assets/devapps.png</file>
+        <file>assets/contact.png</file>
+        <file>assets/kasts.png</file>
+        <file>assets/novastore.png</file>
+        <file>assets/banner-up.png</file>
+        <file>assets/about-store.png</file>
+        <file>assets/password.png</file>
+    </qresource>
+</RCC>

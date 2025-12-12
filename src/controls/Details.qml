@@ -1,13 +1,13 @@
-import QtQuick 2.15
-import QtQml 2.15
-import QtQuick.Controls 2.15
-import QtQuick.Layouts 1.12
-import org.mauikit.controls 1.3 as Maui
-import org.mauikit.filebrowsing 1.3 as FB
+import QtCore
+import QtQuick
+import QtQml
+import QtQuick.Controls
+import QtQuick.Layouts
+import QtQuick.Window
+import org.mauikit.controls as Maui
 import org.kde.novastore 1.0
-import QtGraphicalEffects 1.15
 import Async 1.0
-import org.kde.kirigami 2.12 as Kirigami
+import Qt5Compat.GraphicalEffects
 
 Maui.Page
 {
@@ -149,17 +149,17 @@ Maui.Page
     }
 
     // PASSWORD
-    Kirigami.ShadowedRectangle {
+    Maui.ShadowedRectangle {
         id: passwordDialog
 
-        Kirigami.Theme.colorSet: Kirigami.Theme.View
+        Maui.Theme.colorSet: Maui.Theme.View
         anchors.centerIn: parent
         visible: false
         opacity: 1
         width: 300
         height: 100
-        color: Kirigami.Theme.backgroundColor
-        border.color: Kirigami.Theme.backgroundColor
+        color: Maui.Theme.backgroundColor
+        border.color: Maui.Theme.backgroundColor
         border.width: 2
         shadow.size: 20
         shadow.color: "#5c5c5c"
@@ -186,10 +186,10 @@ Maui.Page
 
     // INSTALLATION
 
-    Kirigami.ShadowedRectangle {
+    Maui.ShadowedRectangle {
         id: installingDialog
 
-        Kirigami.Theme.colorSet: Kirigami.Theme.View
+        Maui.Theme.colorSet: Maui.Theme.View
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
         anchors.margins: 20
@@ -197,8 +197,8 @@ Maui.Page
         opacity: 1
         width: parent.width - 200
         height: 70
-        color: Kirigami.Theme.backgroundColor
-        border.color: Kirigami.Theme.backgroundColor
+        color: Maui.Theme.backgroundColor
+        border.color: Maui.Theme.backgroundColor
         border.width: 2
         shadow.size: 20
         shadow.color: "#5c5c5c"
@@ -213,10 +213,10 @@ Maui.Page
         }
     }
 
-    Kirigami.ShadowedRectangle {
+    Maui.ShadowedRectangle {
         id: installedDialog
 
-        Kirigami.Theme.colorSet: Kirigami.Theme.View
+        Maui.Theme.colorSet: Maui.Theme.View
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
         anchors.margins: 20
@@ -224,8 +224,8 @@ Maui.Page
         opacity: 1
         width: parent.width - 200
         height: 70
-        color: Kirigami.Theme.backgroundColor
-        border.color: Kirigami.Theme.backgroundColor
+        color: Maui.Theme.backgroundColor
+        border.color: Maui.Theme.backgroundColor
         border.width: 2
         shadow.size: 20
         shadow.color: "#5c5c5c"

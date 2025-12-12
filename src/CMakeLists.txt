@@ -1,38 +1,63 @@
-# Copyright 2018-2021 Camilo Higuita <milo.h@aol.com>
-# Copyright 2018-2021 Nitrux Latinoamericana S.C.
-#
-# SPDX-License-Identifier: GPL-3.0-or-later
+remove_definitions(-DQT_NO_CAST_FROM_ASCII -DQT_STRICT_ITERATORS -DQT_NO_CAST_FROM_BYTEARRAY -DQT_NO_URL_CAST_FROM_STRING)
 
-set(project_SRCS
-    code/main.cpp
-    assets/assets.qrc
-    )
+# CREATE AND FINALIZES AN APPLICATION TARGET BIN/NOVASTORE (CMAKE TARGET + LINK QT CORE + HANDLE FINALIZATION)
 
-qtquick_compiler_add_resources(project_QML_QRC controls/qml.qrc)
+qt_add_executable(${PROJECT_NAME}
+    main.cpp
+	code/appbackend.cpp
+	code/async.cpp
+	code/repodata.cpp
+	code/systeminfo.cpp
+	qml.qrc
+    assets.qrc)
 
-add_executable(${PROJECT_NAME}
-    ${project_SRCS}
-    ${project_QML_QRC}
-    backend/appbackend.cpp
-    backend/async.cpp
-    )
+# DEFINE QML MODULE: LINK TO THE BACKING TARGET. THERE WILL BE NO PLUGIN ADDING THE NO_PLUGIN OPTION.
+
+qt_add_qml_module(${PROJECT_NAME} URI org.kde.novastore
+    NO_PLUGIN
+    QML_FILES
+    main.qml
+	controls/Details.qml
+	controls/Home.qml
+	controls/Search.qml
+	controls/Applications.qml
+	controls/Packages.qml
+	controls/Requires.qml
+	controls/Provides.qml
+	controls/Password.qml
+	controls/Management.qml)
+
+# ADD PREPROCESSOR DEFINITIONS (MACROS) SUCH AS DEBUG, RELEASE OR MY_VERSION TO THE APP TARGET
 
 target_compile_definitions(${PROJECT_NAME}
     PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
 
+# ADD COMPILE OPTIONS SUCH AS: -Wall, -Wextra, -g or std=c++17
+
+# target_compile_options(${PROJECT_NAME} PRIVATE -fexceptions)
+
+# SPECIFY LIBRARIES LINKED TO GIVEN TARGET BIN/NOVASTORE
+
 target_link_libraries(${PROJECT_NAME}
     PRIVATE
-    MauiKit3
-    MauiKit3::FileBrowsing
+    MauiKit4
+    MauiKit4::FileBrowsing
+    MauiMan4
+    Qt6::Core
+    Qt6::Gui
+    Qt6::Widgets
+    Qt6::Quick
+    Qt6::Qml
+	Qt6::Xml
+	Qt6::Core5Compat
+    KF6::I18n
+    KF6::CoreAddons
+    KF6::ConfigCore
+    Plasma
+    PlasmaQuick)
 
-    Qt5::Core
-    Qt5::Quick
-    Qt5::Widgets
-    Qt5::Xml
+# FILES TO BE INSTALLED
 
-    KF5::CoreAddons
-    KF5::I18n
-    KF5::Kirigami2
-    )
-
-install(TARGETS ${PROJECT_NAME} ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
+install(FILES data/project.appdata.xml DESTINATION ${KDE_INSTALL_METAINFODIR} RENAME ${PROJECT_URI}.appdata.xml)
+install(FILES data/project.desktop DESTINATION ${KDE_INSTALL_APPDIR} RENAME ${PROJECT_URI}.desktop)
+install(FILES assets/logo.svg DESTINATION ${KDE_INSTALL_ICONDIR}/hicolor/scalable/apps RENAME ${PROJECT_NAME}.svg)

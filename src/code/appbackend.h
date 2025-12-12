@@ -34,6 +34,10 @@ public:
     Q_INVOKABLE void listModernApps();
     Q_INVOKABLE void refresh(QString pass);
     Q_INVOKABLE void updateState();
+    Q_INVOKABLE void getApps();
+    Q_INVOKABLE void getPackages();
+    Q_INVOKABLE void getRequires(const QString &package);
+    Q_INVOKABLE void getProvides(const QString &package);
 
 public:
     /**

@@ -11,7 +11,9 @@ class Async : public QThread
 
 public:
     Q_INVOKABLE void setOperation(QString operation);
-    Q_INVOKABLE void setPassword(QString pass);
+    Q_INVOKABLE QString getOperation();
+    Q_INVOKABLE void setQuery(QString query);
+    Q_INVOKABLE void setPassword(QString password);
 
 public:
     Async();
@@ -26,15 +28,14 @@ public Q_SLOTS:
 
 Q_SIGNALS:
     void packageChanged(QString package);
-
-signals:
-    void installationCompleted(int error);
+    void taskCompleted(int error);
 
 private:
     QString name;
     QString m_package;
     QString m_operation;
-    QString m_pass;
+    QString m_query;
+    QString m_password;
 };
 
 #endif // ASYNC_H
