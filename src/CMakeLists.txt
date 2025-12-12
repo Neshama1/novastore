@@ -52,9 +52,7 @@ target_link_libraries(${PROJECT_NAME}
 	Qt6::Core5Compat
     KF6::I18n
     KF6::CoreAddons
-    KF6::ConfigCore
-    Plasma
-    PlasmaQuick)
+    KF6::ConfigCore)
 
 # FILES TO BE INSTALLED
 
