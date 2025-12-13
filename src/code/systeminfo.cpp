@@ -2,6 +2,12 @@
 #include <KConfig>
 #include <KConfigGroup>
 #include <QDebug>
+#include <QColor>
+#include <QGuiApplication>
+#include <QStyleHints>
+#include <QDir>
+#include <QString>
+#include <QStringList>
 
 SystemInfo::SystemInfo() {
 }
@@ -27,6 +33,26 @@ QString SystemInfo::getWallpaper() {
 
             if (wallpaperPath.contains("file://")) {
                 wallpaperPath.remove("file://");
+            }
+
+            if (wallpaperPath.endsWith("/")) {
+                const auto scheme = QGuiApplication::styleHints()->colorScheme();
+
+                QString path;
+
+                if (scheme == Qt::ColorScheme::Light) {
+                    path = "contents/images/";
+                }
+                else {
+                    path = "contents/images_dark/";
+                }
+
+                QDir pathname(wallpaperPath + path);
+                QStringList files = pathname.entryList(QDir::Files | QDir::NoDotAndDotDot);
+
+                QString file = files[files.count() - 1];
+
+                wallpaperPath = wallpaperPath + path + file;
             }
         }
     }
