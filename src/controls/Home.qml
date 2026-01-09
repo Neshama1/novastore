@@ -9,6 +9,9 @@ import org.mauikit.controls as Maui
 import org.kde.novastore 1.0
 import Qt5Compat.GraphicalEffects
 import QtQuick.Effects
+import org.kde.plasma.core as PlasmaCore
+import org.kde.plasma.wallpapers.image as Wallpaper
+import org.kde.plasma.plasmoid
 
 Maui.Page
 {
@@ -17,6 +20,8 @@ Maui.Page
     headBar.visible: false
 
     property var tags: ["player", "youtube", "messaging", "radio", "music", "news", "rss", "draw", "paint", "image editor", "bible", "scan", "ocr", "viewer", "browser", "mail", "chat", "net", "ftp", "smb", "converter"]
+
+    //property url wallpr: Wallpaper.MediaProxy.source
 
     Component.onCompleted: {
 
@@ -44,6 +49,20 @@ Maui.Page
         wallpaper.source = SystemInfo.getWallpaper()
 
         console.info("Wallpaper", SystemInfo.getWallpaper())
+        console.info("Theme", Qt.resolvedUrl(list.contentItem.children[0].path))
+    }
+
+    ListView {
+        id: list
+        model: Wallpaper.ImageBackend.wallpaperModel
+        delegate: Label {
+            id: label
+
+            property alias path: label.text
+
+            opacity: 0
+            text: model.path
+        }
     }
 
     Maui.ImageColors {
@@ -158,8 +177,9 @@ Maui.Page
                         onClicked: _stackView.push("Applications.qml")
                     }
 
-                    MultiEffect {
-                        anchors.fill: parent
+                    layer.enabled: true
+                    layer.effect: MultiEffect {
+                        anchors.fill: applications
                         source: applications
                         saturation: 0.6
                     }
@@ -209,8 +229,9 @@ Maui.Page
                         onClicked: _stackView.push("Packages.qml")
                     }
 
-                    MultiEffect {
-                        anchors.fill: parent
+                    layer.enabled: true
+                    layer.effect: MultiEffect {
+                        anchors.fill: packages
                         source: packages
                         saturation: 0.5
                     }
@@ -260,8 +281,9 @@ Maui.Page
                         onClicked: _stackView.push("Requires.qml")
                     }
 
-                    MultiEffect {
-                        anchors.fill: parent
+                    layer.enabled: true
+                    layer.effect: MultiEffect {
+                        anchors.fill: requires
                         source: requires
                         saturation: 0.8
                     }
@@ -311,8 +333,9 @@ Maui.Page
                         onClicked: _stackView.push("Provides.qml")
                     }
 
-                    MultiEffect {
-                        anchors.fill: parent
+                    layer.enabled: true
+                    layer.effect: MultiEffect {
+                        anchors.fill: provides
                         source: provides
                         saturation: 0.2
                     }

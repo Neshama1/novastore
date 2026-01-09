@@ -8,6 +8,8 @@
 #include <QDir>
 #include <QString>
 #include <QStringList>
+#include <QGuiApplication>
+#include <QStyleHints>
 
 SystemInfo::SystemInfo() {
 }
@@ -24,10 +26,15 @@ QString SystemInfo::getWallpaper() {
     const auto groups = appletsrc.groupList();
     qDebug() << "Groups in file" << groups;
 
+    bool match = false;
+
     for (const QString& group : containments.groupList()) {
         KConfigGroup containment(&containments, group);
 
         if (containment.groupList().contains("Wallpaper")) {
+
+            match = true;
+
             KConfigGroup wallpaper = containment.group("Wallpaper").group("org.kde.image").group("General");
             wallpaperPath = wallpaper.readEntry("Image");
 
@@ -55,6 +62,38 @@ QString SystemInfo::getWallpaper() {
                 wallpaperPath = wallpaperPath + path + file;
             }
         }
+    }
+
+    if(!match) {
+        KConfig kdeglobals("kdeglobals", KConfig::NoGlobals);
+        KConfigGroup KDE(&kdeglobals, "KDE");
+        QString lookAndFeel = KDE.readEntry("LookAndFeelPackage");
+
+        qDebug() << "Look and Feel" << lookAndFeel;
+
+        QString filePath = "/usr/share/plasma/look-and-feel/" + lookAndFeel + "/contents/defaults";
+
+        KConfig defaults(filePath, KConfig::SimpleConfig);
+        KConfigGroup wallpaper(&defaults, "Wallpaper");
+        QString image = wallpaper.readEntry("Image");
+
+        qDebug() << "Image" << image;
+
+        QString path;
+
+        if (QGuiApplication::styleHints()->colorScheme() == Qt::ColorScheme::Light) {
+            path = "/usr/share/wallpapers/" + image + "/contents/images";
+        }
+        else {
+            path = "/usr/share/wallpapers/" + image + "/contents/images_dark";
+        }
+
+        QDir pathname(path);
+
+        QStringList files = pathname.entryList(QDir::Files | QDir::NoDotAndDotDot);
+        QString file = files[files.count() - 1];
+
+        wallpaperPath = path + "/" + file;
     }
 
     return wallpaperPath;
