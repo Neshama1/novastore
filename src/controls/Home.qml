@@ -78,7 +78,7 @@ Maui.Page
             id: banner
             Layout.fillWidth: true
             Layout.topMargin: Screen.height < 800 ? 40 : 50
-            height: Screen.height < 800 ? 150 : 200
+            height: Screen.height < 800 ? 150 : 180
 
             radius: 10
             color: "transparent"
@@ -130,7 +130,7 @@ Maui.Page
 
             RowLayout {
                 Layout.preferredWidth: parent.width
-                Layout.preferredHeight: 80
+                Layout.preferredHeight: 70
                 //Layout.preferredHeight: Screen.height < 800 ? 65 : 80
                 spacing: 20
 
