@@ -113,7 +113,8 @@ Maui.Page
                 //imageSizeHint: Screen.height < 800 ? parent.height * 1.2 : parent.height * 1.4
                 imageSource: "qrc:/assets/about-store.png"
                 fillMode: Image.PreserveAspectCrop
-                visible: Screen.height < 800 ? false : true
+                visible: false
+                //visible: Screen.height < 800 ? false : true
             }
         }
 
